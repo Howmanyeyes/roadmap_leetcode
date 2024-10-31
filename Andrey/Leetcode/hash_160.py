@@ -35,20 +35,25 @@ class Solution(object):
         i = 1
         len_A = 1
         len_B = 1
-        while 1:
+        stop_A, stop_B = False, False
+        while not (stop_A and stop_B):
             if headA.next is None:
-                break
+                stop_A = True
+            else:
+                headA = headA.next
+                hash_map_A[headA] = headA
+                len_A += 1
             if headB.next is None:
-                break
-            headA = headA.next
-            headB = headB.next
-            hash_map_A[headA] = headA
-            hash_map_B[headB] = headB
-            len_A += 1
-            len_B += 1
+                stop_B = True
+            else:
+                headB = headB.next
+                hash_map_B[headB] = headB
+                len_B += 1
         short_head = "A"
+        long_head = "B"
         if len_A > len_B:
             short_head = "B"
+            long_head = "A"
         least_len = {
             "A": original_A,
             "B": original_B
@@ -58,11 +63,15 @@ class Solution(object):
             "B": hash_map_B
         }
         shortest = least_len.get(short_head)
-        shortest_hash = least_map.get(short_head)
-        while 1:
-            if shortest_hash.get(shortest, False):
+        longest_hash = least_map.get(long_head)
+        if longest_hash.get(shortest, False):
+            return shortest
+        while shortest.next is not None:
+            if longest_hash.get(shortest, False):
                 return shortest
             shortest = shortest.next
+        if longest_hash.get(shortest, False):
+            return shortest 
         return None
 
 
