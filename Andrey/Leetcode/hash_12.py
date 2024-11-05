@@ -29,6 +29,12 @@ quite possible with long list of spaggetti code, tho i am convinced that that re
 faster, i know for a fact that it is very ugly. I don't know how to use hash fucking map here,
 but i suspect it has to do with deviding number into digits and then deviding them into possible 
 digits and thn using map to convert them into roman 
+
+On the next day made quite inefficient algo that is just bleeding with lists, i am dissappointed with myself
+
+It turn out that you can use sorted list of int-roman pairs and just iterate through it, it works 
+beacause romans try to use biggest numbers and in sorted list biggest numbers get used automatically
+
 """
 class Solution(object):
     def intToRoman(self, num):
@@ -51,17 +57,53 @@ class Solution(object):
             900: 'CM',
             1000: 'M'
         }
-        thousands = (num // 1000) * 1
-        hundreds = ((num // 100) % 10) * 1
-        tens = ((num // 10) % 100) * 1
-        ones = num % 10
+        devider = {
+            9: '9',
+            8: '5 1 1 1',
+            7: '5 1 1',
+            6: '5 1',
+            5: '5',
+            4: '4',
+            3: '1 1 1',
+            2: '1 1',
+            1: '1'
+        }
+        thousands = {
+            1: 'M'
+        }
+        hundreds = {
+            1: 'C',
+            4: 'CD',
+            5: 'D',
+            9: 'CM',
+        }
+        tens = {
+            1: 'X',
+            4: 'XL',
+            5: 'L',
+            9: 'XC',
+        }
+        ones = {
+            1: 'I',
+            4: 'IV',
+            5: 'V',
+            9: 'IX',
+        }
+        thousand = (num // 1000) * 1
+        hundred = ((num // 100) % 10) * 1
+        ten = ((num // 10) % 10) * 1
+        one = num % 10
         res = ''
-        
-        res += 'M'*thousands
-        if hundreds - 9 >= 0:
-            res += 'CM'
-        elif hundreds - 5 >= 0:
-            res += 'D'
-            res += 'C' * (hundreds - 5)
-        else:
-            res += 
+        if thousand != 0:
+            res += ''.join([thousands[int(x)] for x in devider[thousand].split(' ')])
+        if hundred != 0:
+            res += ''.join([hundreds[int(x)] for x in devider[hundred].split(' ')])
+        if ten != 0:
+            res += ''.join([tens[int(x)] for x in devider[ten].split(' ')])
+        if one != 0:
+            res += ''.join([ones[int(x)] for x in devider[one].split(' ')])
+        return res
+    
+if __name__ == '__main__':
+    s = Solution()
+    print(s.intToRoman(3749))
