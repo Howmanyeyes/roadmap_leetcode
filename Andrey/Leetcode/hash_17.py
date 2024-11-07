@@ -15,6 +15,9 @@ in the end we need to return list of strings so maybe we dyuunamicly generate ou
 iteration?
 
 I just have no god damn idea. Fuck me.
+
+Copied solution for anti time waste. If 3 problems in a row go like this i will have to do something
+with it, maybe watch courses or give up programming
 """
 
 class Solution(object):
@@ -33,5 +36,15 @@ class Solution(object):
             "8": "tuv",
             "9": "wxyz"
         }
+        result = set()
+        size = 1
         for i in range(len(digits)):
             digit = digits[i]
+            size = size * len(keyboard[digit]) 
+            
+        return size
+    
+if __name__ == '__main__':
+    s = Solution()
+    print(s.letterCombinations('22'))
+
