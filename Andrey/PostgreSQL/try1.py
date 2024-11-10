@@ -1,13 +1,10 @@
 import psycopg2
 from psycopg2 import sql
 import sqlite3
-postgres_conn_params = {
-    'dbname': 'postgres',  # Default database
-    'user': 'postgres',
-    'password': 'qwerty',  # Replace with your postgres user's password
-    'host': 'localhost',
-    'port': 5432
-}
+
+from consts import db_logger
+from db_classes import PostgreSQL, SQLite
+
 def create_postgres_user_and_db(cursor, new_user, new_password, new_db):
     try:
         # Create a new user
@@ -25,12 +22,7 @@ def create_postgres_user_and_db(cursor, new_user, new_password, new_db):
 
 
 if __name__ == '__main__':
-    try:
-        # Attempt to connect to PostgreSQL
-        postgres_conn = psycopg2.connect(**postgres_conn_params)
-        postgres_conn.autocommit = True  # Enable autocommit for DDL statements
-        postgres_cursor = postgres_conn.cursor()
-        print("Connected to PostgreSQL.")
-    except psycopg2.OperationalError as e:
-        print("PostgreSQL is not available. Falling back to SQLite.")
-        postgres_conn = None
+    if SQLite.search_for_sql():
+        db = PostgreSQL()
+    else: 
+        db = SQLite()
