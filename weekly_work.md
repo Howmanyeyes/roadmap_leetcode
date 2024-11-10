@@ -6,10 +6,10 @@
 ## Mikhail
 3.11.2024 - 10.11.2024:
 1. Каждый день решать по задачке (ежедневной) на литкоде 
-    Решено: 0/7
+    Решено: 7/7
 2. Посмотреть 10 лекций и 10 контестов по ЦФ. 
-    Контесты: 0/10
-    Лекции: 1/10
+    Контесты: 1/10
+    Лекции: 6/10
 3. Доделать 2 первых пункта из родамапа в Pre-trained Models
-    Benefits of Pre-trained Models: -
-    Limitations and Considerations: - 
+    Benefits of Pre-trained Models: +
+    Limitations and Considerations: +
