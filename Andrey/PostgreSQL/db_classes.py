@@ -1,8 +1,10 @@
 """Classes for db interactions"""
-from abc import ABC
+import abc
 import psycopg2
 
-class AbstractDB(ABC):
+from Andrey.PostgreSQL.consts import db_logger
+
+class AbstractDB(abc.ABC):
     """Abstract class for db, it will be used only to determine if PostgreSQL exists"""
     @staticmethod    
     def search_for_sql():
@@ -15,16 +17,18 @@ class AbstractDB(ABC):
         }
         try:
             postgres_conn = psycopg2.connect(**postgres_conn_params)
-            print("Connected to PostgreSQL.")
+            db_logger.info("Connected to PostgreSQL.")
             return True
         except psycopg2.OperationalError as e:
-            print("PostgreSQL is not available. Falling back to SQLite.")
+            db_logger.info("PostgreSQL is not available. Falling back to SQLite.")
             return False
+    
+    @abc.abstractmethod
+    def connect_to_db(self):
+        pass
 
-
-class SQLite():
+class SQLite(AbstractDB):
     pass
 
-
-class PostgreSQL():
+class PostgreSQL(AbstractDB):
     pass

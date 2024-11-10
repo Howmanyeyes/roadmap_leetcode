@@ -3,6 +3,9 @@ import logging
 import os
 import sys
 import asyncio
+import queue
+from logging.handlers import QueueHandler, QueueListener
+
 import requests
 
 
@@ -51,7 +54,8 @@ def make_logger(name: str,
                 method: str = None,
                 async_logging: bool = False,
                 format: str = '%(asctime)s / %(name)s / %(levelname)s / %(message)s',
-                datefmt: str = '%d-%m-Y% %H:%M:%S',
+                datefmt: str = '%d-%m-%Y %H:%M:%S',
+                level: str = 'INFO',
                 **kwargs
                 ) -> logging.Logger:
     """
@@ -71,9 +75,15 @@ def make_logger(name: str,
     url_handlers = {
         "HTTPLogHandler": HTTPLogHandler
     }
-
+    levels = {
+        "DEBUG": logging.DEBUG,
+        "INFO": logging.INFO,
+        "WARNING": logging.WARNING,
+        "ERROR": logging.ERROR,
+        "CRITICAL": logging.CRITICAL
+    }
     logger = logging.getLogger(name=name)
-    logger.setLevel(logging.INFO)
+    logger.setLevel(levels.get(level.upper(), logging.INFO))
     if logger.hasHandlers():
         logger.handlers.clear()
     
@@ -83,7 +93,43 @@ def make_logger(name: str,
         raise ValueError("At least one of write_to_console, write_to_file, or write_to_url must be True.")
 
     if async_logging:
-        pass
+        log_queue = queue.Queue(-1)
+        queue_handler = QueueHandler(log_queue)
+        logger.addHandler(queue_handler)
+        
+        handlers = []
+        if write_to_console:
+            console_handler = logging.StreamHandler(sys.stdout)
+            console_handler.setFormatter(formatter)
+            handlers.append(console_handler)
+        
+        if write_to_file:
+            if path_to_file is not None:
+                file_path = os.path.join(os.getcwd(), *path_to_file)
+                os.makedirs(file_path, exist_ok=True)
+                log_file = os.path.join(file_path, f'{name}.log')
+                file_handler = logging.FileHandler(filename=log_file, encoding=encoding)
+            else:
+                file_path = os.getcwd()
+                log_file = os.path.join(file_path, f'{name}.log')
+                file_handler = logging.FileHandler(filename=log_file, encoding=encoding)
+            file_handler.setFormatter(formatter)
+            handlers.append(file_handler)
+        
+        if write_to_url:
+            if url is None or url_handlers.get(method, None) is None:
+                raise ValueError("url and method must be specified when write_to_url is True.")
+            else:
+                kwargs['url'] = url
+                url_handler = url_handlers[method](**kwargs)
+                url_handler.setFormatter(formatter)
+                handlers.append(url_handler)
+
+        listener = QueueListener(log_queue, *handlers)
+        listener.start()
+
+        logger.listener = listener
+
     else:
         if write_to_console:
             console_handler = logging.StreamHandler(sys.stdout)
@@ -92,12 +138,12 @@ def make_logger(name: str,
 
         if write_to_file:
             if path_to_file is not None:
-                file_path = os.path.join(os.path.dirname(__file__), *path_to_file)
+                file_path = os.path.join(os.getcwd(), *path_to_file)
                 os.makedirs(file_path, exist_ok=True)
                 log_file = os.path.join(file_path, f'{name}.log')
                 file_handler = logging.FileHandler(filename=log_file, encoding=encoding)
             else:
-                file_path = os.path.dirname(__file__)
+                file_path = os.getcwd()
                 log_file = os.path.join(file_path, f'{name}.log')
                 file_handler = logging.FileHandler(filename=log_file, encoding=encoding)
             file_handler.setFormatter(formatter)
@@ -111,3 +157,5 @@ def make_logger(name: str,
                 url_handler = url_handlers[method](**kwargs)
                 url_handler.setFormatter(formatter)
                 logger.addHandler(url_handler)
+
+    return logger
