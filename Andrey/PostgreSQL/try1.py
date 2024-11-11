@@ -26,3 +26,9 @@ if __name__ == '__main__':
         db = PostgreSQL()
     else: 
         db = SQLite()
+    print(f"We are using {db.__class__.__name__}")
+
+    db.create_user('Seva', 'qwerty')
+
+
+    print(1)

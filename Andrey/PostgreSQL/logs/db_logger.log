@@ -1,1 +1,21 @@
 08-11-2024 11:26:53 / db_logger / INFO / Connected to PostgreSQL.
+11-11-2024 09:44:07 / db_logger / INFO / PostgreSQL is not available. Falling back to SQLite.
+11-11-2024 09:44:29 / db_logger / INFO / PostgreSQL is not available. Falling back to SQLite.
+11-11-2024 09:44:38 / db_logger / INFO / PostgreSQL is not available. Falling back to SQLite.
+11-11-2024 09:44:57 / db_logger / INFO / PostgreSQL is not available. Falling back to SQLite.
+11-11-2024 10:09:06 / db_logger / INFO / PostgreSQL is not available. Falling back to SQLite.
+11-11-2024 10:10:55 / db_logger / INFO / PostgreSQL is not available. Falling back to SQLite.
+11-11-2024 10:16:21 / db_logger / INFO / PostgreSQL is not available. Falling back to SQLite.
+11-11-2024 10:16:21 / db_logger / INFO / Simulated user 'Seva' with password in SQLite.
+11-11-2024 10:16:21 / db_logger / INFO / Connected to SQLite database 'mydatabase.sqlite3' as user 'Seva'.
+11-11-2024 10:19:39 / db_logger / INFO / Connected to PostgreSQL.
+11-11-2024 10:19:39 / db_logger / INFO / User 'Seva' created in PostgreSQL.
+11-11-2024 10:19:39 / db_logger / INFO / Logged in as user 'Seva' in PostgreSQL.
+11-11-2024 10:19:47 / db_logger / INFO / Connected to PostgreSQL.
+11-11-2024 10:19:47 / db_logger / WARNING / User 'Seva' already exists in PostgreSQL.
+11-11-2024 10:19:47 / db_logger / INFO / Logged in as existing user 'Seva' in PostgreSQL.
+11-11-2024 10:21:05 / db_logger / INFO / Connected to PostgreSQL.
+11-11-2024 10:21:05 / db_logger / WARNING / User 'Seva' already exists in PostgreSQL.
+11-11-2024 10:21:05 / db_logger / INFO / Logged in as existing user 'Seva' in PostgreSQL.
+11-11-2024 10:31:47 / db_logger / INFO / Connected to PostgreSQL.
+11-11-2024 10:48:40 / db_logger / INFO / Connected to PostgreSQL.
