@@ -29,6 +29,7 @@ if __name__ == '__main__':
     print(f"We are using {db.__class__.__name__}")
 
     db.create_user('Seva', 'qwerty')
+    db.create_db('Seva_db')
 
 
     print(1)

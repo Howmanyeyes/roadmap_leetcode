@@ -39,6 +39,8 @@ class PostgreSQL(AbstractDB):
         }
         self.user_conn_params = None
         self.conn = None
+        self.user = None
+        self.password = None
 
     def create_user(self, new_user, new_password):
         """Create a new PostgreSQL user with a password and log in as that user."""
@@ -64,6 +66,8 @@ class PostgreSQL(AbstractDB):
                 'host': self.admin_conn_params['host'],
                 'port': self.admin_conn_params['port']
             }
+            self.user = new_user
+            self.password = new_password
 
             # Connect as the new user
             self.conn = psycopg2.connect(**self.user_conn_params)
@@ -79,6 +83,8 @@ class PostgreSQL(AbstractDB):
                 'host': self.admin_conn_params['host'],
                 'port': self.admin_conn_params['port']
             }
+            self.user = new_user
+            self.password = new_password
             try:
                 self.conn = psycopg2.connect(**self.user_conn_params)
                 db_logger.info(f"Logged in as existing user '{new_user}' in PostgreSQL.")
@@ -87,6 +93,25 @@ class PostgreSQL(AbstractDB):
                 raise
         except Exception as e:
             db_logger.error(f"An error occurred while creating user '{new_user}': {e}")
+            raise
+
+    def create_db(self, name: str) -> None:
+        """Create a new PostgreSQL database with the given name using the current user."""
+        if not self.conn:
+            raise Exception("Not connected as a user. Please create a user and log in first.")
+
+        try:
+            # The current user must have the CREATEDB privilege
+            with self.conn.cursor() as cursor:
+                cursor.execute(f"CREATE DATABASE {psycopg2.extensions.quote_ident(name, self.conn)};")
+                db_logger.info(f"Database '{name}' created by user '{self.user}'.")
+        except psycopg2.errors.InsufficientPrivilege:
+            db_logger.error(f"User '{self.user}' does not have permission to create a database.")
+            raise
+        except psycopg2.errors.DuplicateDatabase:
+            db_logger.warning(f"Database '{name}' already exists.")
+        except Exception as e:
+            db_logger.error(f"An error occurred while creating database '{name}': {e}")
             raise
 
 class SQLite(AbstractDB):
@@ -111,4 +136,21 @@ class SQLite(AbstractDB):
             db_logger.info(f"Connected to SQLite database '{self.db_file}' as user '{username}'.")
         except sqlite3.Error as e:
             db_logger.error(f"Failed to connect to SQLite database '{self.db_file}': {e}")
+            raise
+
+    def create_db(self, name: str) -> None:
+        """
+        In SQLite, the database is the file itself. To simulate creating a database,
+        we'll create a new SQLite file with the given name.
+        """
+        if not self.user:
+            raise Exception("No user is logged in. Please create a user first.")
+
+        try:
+            db_file = f"{name}.sqlite3"
+            self.conn = sqlite3.connect(db_file)
+            self.db_file = db_file
+            db_logger.info(f"Database '{db_file}' created by user '{self.user}' in SQLite.")
+        except sqlite3.Error as e:
+            db_logger.error(f"An error occurred while creating SQLite database '{name}': {e}")
             raise

@@ -19,3 +19,10 @@
 11-11-2024 10:21:05 / db_logger / INFO / Logged in as existing user 'Seva' in PostgreSQL.
 11-11-2024 10:31:47 / db_logger / INFO / Connected to PostgreSQL.
 11-11-2024 10:48:40 / db_logger / INFO / Connected to PostgreSQL.
+11-11-2024 12:48:24 / db_logger / INFO / PostgreSQL is not available. Falling back to SQLite.
+11-11-2024 12:48:24 / db_logger / INFO / Simulated user 'Seva' with password in SQLite.
+11-11-2024 12:48:24 / db_logger / INFO / Connected to SQLite database 'mydatabase.sqlite3' as user 'Seva'.
+11-11-2024 12:48:24 / db_logger / INFO / Database 'Seva_db.sqlite3' created by user 'Seva' in SQLite.
+11-11-2024 12:57:57 / db_logger / INFO / PostgreSQL is not available. Falling back to SQLite.
+11-11-2024 12:57:57 / db_logger / INFO / Simulated user 'Seva' with password in SQLite.
+11-11-2024 12:57:57 / db_logger / INFO / Connected to SQLite database 'mydatabase.sqlite3' as user 'Seva'.
