@@ -7,7 +7,7 @@ import queue
 from logging.handlers import QueueHandler, QueueListener
 
 import requests
-
+import websocket
 
 class HTTPLogHandler(logging.Handler):
     """
@@ -43,6 +43,39 @@ class HTTPLogHandler(logging.Handler):
         except Exception:
             self.handleError(record)
 
+class HTTPLogHandler(logging.Handler):
+    """
+    Real - used websocket handler. Allows you to connect to specified socket and send logs to it.
+    """
+    def __init__(self, url, api_key=None, api_secret=None, username=None, password=None):
+        super().__init__()
+        self.url = url
+        self.api_key = api_key
+        self.api_secret = api_secret
+        self.username = username
+        self.password = password
+
+    def emit(self, record):
+        try:
+            log_entry = self.format(record)
+
+            headers = {'Content-Type': 'application/json'}
+            data = {'log': log_entry}
+
+            # Add authentication if provided
+            auth = None
+            if self.username and self.password:
+                auth = (self.username, self.password)
+            elif self.api_key and self.api_secret:
+                headers['API_KEY'] = self.api_key
+                headers['API_SECRET'] = self.api_secret
+
+            # Send the log entry to the specified URL
+            response = requests.post(self.url, json=data, headers=headers, auth=auth)
+            response.raise_for_status()
+
+        except Exception:
+            self.handleError(record)
 
 def make_logger(name: str,
                 encoding: str = 'utf-8',
@@ -159,3 +192,10 @@ def make_logger(name: str,
                 logger.addHandler(url_handler)
 
     return logger
+
+if __name__ == '__main__':
+    logger = make_logger(name='suka', async_logging=True)
+    logger.error("sss")
+    logger.info('ppp')
+
+    print(1)
