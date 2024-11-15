@@ -30,4 +30,67 @@ met. In the end we will have {target: list of lists of lists of lists of indexes
 have 4 layers of incapsulation, each layer containing 2 lists (except for first where it is any)
 it's better that i learn what tree is and then do something like this, cuz in my brain that
 list of lists looks perfectly like a tree or a pyramid.
+
+let's make this approach. For cases when we have identical indexes in different lists we won't have
+a problem
+
+I can't make this solution work, I will leave this problem be for the time being
 """
+
+class Solution:
+    def fourSum(self, nums: list[int], target: int) -> list[list[int]]:
+        one_layer = {}
+        two_layer = {}
+        three_layer = {}
+        four_layer = {}
+
+        for i in range(len(nums)):
+            if nums[i] in one_layer:
+                one_layer[nums[i]].append(i)
+            else:
+                one_layer[nums[i]] = []
+                one_layer[nums[i]].append(i)
+        tmp_set = set()
+        for num1 in one_layer:
+            tmp_set.add(num1)
+            for num2 in one_layer:
+                if num2 in tmp_set:
+                    pass
+                
+                elif num1 + num2 in two_layer:
+                    two_layer[num1 + num2].append((one_layer[num1], one_layer[num2]))
+                else:
+                    two_layer[num1 + num2] = []
+                    two_layer[num1 + num2].append((one_layer[num1], one_layer[num2]))
+        tmp_set = set()
+
+        for num1 in two_layer:
+            tmp_set.add(num1)
+            for num2 in two_layer:
+                if num2 in tmp_set:
+                    pass
+                elif num1 + num2 in three_layer:
+                    three_layer[num1 + num2].append((two_layer[num1], two_layer[num2]))
+                else:
+                    three_layer[num1 + num2] = []
+                    three_layer[num1 + num2].append((two_layer[num1], two_layer[num2]))
+        tmp_set = set()
+
+        for num1 in three_layer:
+            tmp_set.add(num1)
+            for num2 in three_layer:
+                if num2 in tmp_set:
+                    pass
+                elif num1 + num2 in four_layer:
+                    four_layer[num1 + num2].append((three_layer[num1], three_layer[num2]))
+                else:
+                    four_layer[num1 + num2] = []
+                    four_layer[num1 + num2].append((three_layer[num1], three_layer[num2]))
+        
+        for num in four_layer:
+            if num == target:
+                pass
+
+if __name__ == '__main__':
+    s = Solution()
+    print(Solution().fourSum([1,0,-1,0,-2,2], 0))
