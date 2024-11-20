@@ -20,35 +20,34 @@ class Solution:
             else:
                 word_map[word] = 1
         
-
-
-        sorted_words = [x for x in word_map.items()]
-        sorted_words = sorted(sorted_words, key = lambda x: x[1], reverse = True)
+        sorted_words = sorted([x for x in word_map.items()], key = lambda y: y[1], reverse = True)
         ans = []
-        ans_nums = set()
-        pre_ans = []
-        for num in range(k):
-            a = sorted_words[num][1]
-            if sorted_words[num][1] in ans_nums:
-                p = num - 1
-                while sorted_words[p][1] == a:
-                    pre_ans.append(sorted_words[p][0])
-                    p += 1
-                    if p - num - 1 > k:
-                        break
-                pre_ans = sorted(pre_ans, key = lambda x: ord(x[0][0]))
-                for answer in pre_ans:
-                    ans.append(answer)
-            else:
-                ans_nums.add(num)
-                ans.append(sorted_words[num][0])
-            if len(ans) >= k:
-                break
+        sortable = []
+        used_digits = set()
+        for i in range(k):
+            if sorted_words[i][0] in ans:
+                continue
             
-        return ans[:k+1]
+            digit = sorted_words[i][1]
+            disp = 1
+            sortable.append(sorted_words[i][0])
+        
+            while sorted_words[i+disp][1] == digit:
+                sortable.append(sorted_words[i+disp][0])
+                disp += 1
+                if disp + i >= len(sorted_words):
+                    break
+        
+            sortable.sort()
+            for x in sortable:
+                ans.append(x)
+            
+            sortable = []
+        if len(ans) >= k:
+            return ans[:k]
+        return ans[:k]
 
-        print(1)
 
 if __name__ == '__main__':
     s = Solution()
-    s.topKFrequent(["the","day","is","sunny","the","the","the","sunny","is","is"], 4)
+    print(s.topKFrequent(["i","love","leetcode","i","love","coding"], 3))
