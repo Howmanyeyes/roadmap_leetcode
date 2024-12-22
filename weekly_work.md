@@ -70,5 +70,4 @@
 22.12.24-29.12.24:
 1. Написать pet проект на python
 2. Разобрать на https://roadmap.sh/mlops containerization
-3. 
-
+3. Сдать БДЗ по информатике
