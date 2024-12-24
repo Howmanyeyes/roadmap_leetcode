@@ -71,5 +71,5 @@
 1. Написать pet проект на python
 2. Разобрать на https://roadmap.sh/mlops containerization
 3. Сдать БДЗ по информатике --- ВЫПОЛНЕНО
-4. Каждый день решать по задачке (ежедневной) на литкоде: 0/7
+4. Решить 3 задачки на литкоде
 5. Посмотреть лекцию https://www.youtube.com/watch?v=7eQJ2WiKTIA&list=PLaRUeIuewv8BYOrm6HBgJKbGUD-jcBQpW
