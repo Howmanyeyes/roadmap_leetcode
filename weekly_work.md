@@ -72,4 +72,4 @@
 2. Разобрать на https://roadmap.sh/mlops containerization
 3. Сдать БДЗ по информатике --- ВЫПОЛНЕНО
 4. Каждый день решать по задачке (ежедневной) на литкоде: 0/7
-   
+5. Посмотреть лекцию https://www.youtube.com/watch?v=7eQJ2WiKTIA&list=PLaRUeIuewv8BYOrm6HBgJKbGUD-jcBQpW
