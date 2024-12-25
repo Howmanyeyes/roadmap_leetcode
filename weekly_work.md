@@ -68,8 +68,8 @@
 5. Подготовиться к физике  --- ВЫПОЛНЕНО
 
 22.12.24-29.12.24:
-1. Написать pet проект на python
+1. Определиться с pet проектом на python
 2. Разобрать на https://roadmap.sh/mlops containerization
 3. Сдать БДЗ по информатике --- ВЫПОЛНЕНО
-4. Решить 3 задачки на литкоде
+4. Решить 3 задачки на литкоде --- ВЫПОЛНЕНО
 5. Посмотреть лекцию https://www.youtube.com/watch?v=7eQJ2WiKTIA&list=PLaRUeIuewv8BYOrm6HBgJKbGUD-jcBQpW
