@@ -73,3 +73,5 @@
 3. Сдать БДЗ по информатике --- ВЫПОЛНЕНО
 4. Решить 3 задачки на литкоде --- ВЫПОЛНЕНО
 5. Посмотреть лекцию https://www.youtube.com/watch?v=7eQJ2WiKTIA&list=PLaRUeIuewv8BYOrm6HBgJKbGUD-jcBQpW --- ВЫПОЛНЕНО
+6. Изучить pandas
+7. Изучить matplotlib
