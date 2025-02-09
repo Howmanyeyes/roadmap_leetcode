@@ -85,3 +85,4 @@
 1. 3 задачи на литкоде
 2. изучить matplotlib
 3. на https://roadmap.sh/mlops разобрать Machine Learning Fundamentals
+4. Изучить pandas
