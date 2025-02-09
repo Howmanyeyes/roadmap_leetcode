@@ -79,3 +79,9 @@
 5. Посмотреть лекцию https://www.youtube.com/watch?v=7eQJ2WiKTIA&list=PLaRUeIuewv8BYOrm6HBgJKbGUD-jcBQpW --- ВЫПОЛНЕНО
 6. Изучить pandas
 7. Изучить matplotlib
+
+
+09.02.25-16.02.25
+1. 3 задачи на литкоде
+2. изучить matplotlib
+3. на https://roadmap.sh/mlops разобрать Machine Learning Fundamentals
